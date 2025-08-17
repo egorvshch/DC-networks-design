@@ -1,1 +1,1 @@
-# DC-networks-design
+Home work for DC networks design course
