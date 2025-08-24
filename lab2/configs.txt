@@ -1,0 +1,135 @@
+#######Spine-1 
+router ospf 1
+   router-id 10.0.1.0
+   passive-interface default
+   no  passive-interface et1
+   no  passive-interface et2
+   no  passive-interface et3
+		 
+interface Lo0
+ip ospf area 0.0.0.0
+interface Lo1 
+ip ospf area 0.0.0.0
+interface Eth1 
+   ip ospf network point-to-point
+   ip ospf authentication message-digest
+   ip ospf message-digest-key 1 sha256 0 otus
+   ip ospf area 0.0.0.0
+   
+interface Eth2 
+   ip ospf network point-to-point
+   ip ospf authentication message-digest
+   ip ospf message-digest-key 1 sha256 0 otus
+   ip ospf area 0.0.0.0
+
+interface Eth3 
+   ip ospf network point-to-point
+   ip ospf authentication message-digest
+   ip ospf message-digest-key 1 sha256 0 otus
+   ip ospf area 0.0.0.0
+
+#######Spine-2 
+router ospf 1
+   router-id 10.0.2.0
+   passive-interface default
+   no  passive-interface et1
+   no  passive-interface et2
+   no  passive-interface et3
+
+interface Lo0 
+ip ospf area 0.0.0.0
+interface Lo1 
+ip ospf area 0.0.0.0
+interface Eth1 
+   ip ospf network point-to-point
+   ip ospf authentication message-digest
+   ip ospf message-digest-key 1 sha256 0 otus
+   ip ospf area 0.0.0.0
+
+interface Eth2 
+   ip ospf network point-to-point
+   ip ospf authentication message-digest
+   ip ospf message-digest-key 1 sha256 0 otus
+   ip ospf area 0.0.0.0
+
+interface Eth3 
+   ip ospf network point-to-point
+   ip ospf authentication message-digest
+   ip ospf message-digest-key 1 sha256 0 otus
+   ip ospf area 0.0.0.0
+
+
+#######Leaf-1 
+router ospf 1
+   router-id 10.0.0.1
+   passive-interface default
+   no  passive-interface et1
+   no  passive-interface et2
+   no  passive-interface et3
+interface Lo0 
+ip ospf area 0.0.0.0
+interface Lo1 
+ip ospf area 0.0.0.0
+interface Eth1 
+   ip ospf network point-to-point
+   ip ospf authentication message-digest
+   ip ospf message-digest-key 1 sha256 0 otus
+   ip ospf area 0.0.0.0
+
+interface Eth2 
+   ip ospf network point-to-point
+   ip ospf authentication message-digest
+   ip ospf message-digest-key 1 sha256 0 otus
+   ip ospf area 0.0.0.0
+
+
+
+#######Leaf-2 
+router ospf 1
+   router-id 10.0.0.2
+   passive-interface default
+   no  passive-interface et1
+   no  passive-interface et2
+   no  passive-interface et3
+interface Lo0
+ip ospf area 0.0.0.0
+interface Lo1 
+ip ospf area 0.0.0.0
+interface Eth1 
+   ip ospf network point-to-point
+   ip ospf authentication message-digest
+   ip ospf message-digest-key 1 sha256 0 otus
+   ip ospf area 0.0.0.0
+
+interface Eth2 
+   ip ospf network point-to-point
+   ip ospf authentication message-digest
+   ip ospf message-digest-key 1 sha256 0 otus
+   ip ospf area 0.0.0.0
+
+interface Eth3 
+
+
+#######Leaf-3 
+router ospf 1
+   router-id 10.0.0.3
+   passive-interface default
+   no  passive-interface et1
+   no  passive-interface et2
+   no  passive-interface et3
+interface Lo0 
+ip ospf area 0.0.0.0
+interface Lo1 
+ip ospf area 0.0.0.0
+interface Eth1 
+   ip ospf network point-to-point
+   ip ospf authentication message-digest
+   ip ospf message-digest-key 1 sha256 0 otus
+   ip ospf area 0.0.0.0
+
+interface Eth2 
+   ip ospf network point-to-point
+   ip ospf authentication message-digest
+   ip ospf message-digest-key 1 sha256 0 otus
+   ip ospf area 0.0.0.0
+
