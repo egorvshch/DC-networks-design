@@ -1,1 +1,1 @@
-Homework for the DC networks design course
+Homework for the DC network design course
