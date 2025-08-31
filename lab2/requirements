@@ -1,0 +1,11 @@
+Рекомендации
+• Использовать point-to-point на интерфейсах
+• Указывать RID в явном виде
+• Passive-interface default
+• Один номер area для каждого pod
+• Использовать ip ospf area вместо network (Cisco Nexus specific)
+• Использовать BFD
+• Избегать использования redistribute
+• Применять минимально необходимую конфигурацию OSPF
+• Настраивать OSPF adjacency в GRT (не делать underlay внутри vrf)
+• Настройка аутентификации
