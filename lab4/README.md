@@ -120,7 +120,7 @@ end
 
 ```
 
-#####Полная конфигурация коммутаторов:
+###### Полная конфигурация коммутаторов:
 
 <details>
 <summary> Spine-1 </summary>
@@ -529,7 +529,7 @@ Leaf-3#
 ---
 #### 4. Проверка наличия IP связанности
 
-##### 4.1 Проверка установления соседства BGP со всеми Leaf коммутаторами на примере Spine-1 коммутатора:
+##### 4.1 Проверка установления соседства BGP со всеми Leaf коммутаторами на примере Spine-1:
 <details>
 <summary> Spine-1#sh ip bgp summary </summary>
   
@@ -573,8 +573,7 @@ Spine-1#
 </details>
 
 
-##### 4.2 Проверка таблицы маршрутизации на примере Spine-1 коммутатора. 
-Из таблицы маршрутизации видно, что подсети интерфейсов Lo0 и Lo1 коммутаторов Leaf-1, Leaf-2 и Leaf-3 локального PoD присутствуют и получены через L1 уровень отношений, а подсети интерфейсов Lo0 и Lo1 коммутаторов Leaf-4, Leaf-5 и Leaf-6 второго PoD присутствуют и получены через L2 уровень отношений и доступны через ECMP маршруты через оба SuperSpine коммутатора:
+##### 4.2 Проверка таблицы маршрутизации на примере Spine-1: 
 
 <details>
 <summary> Spine-1#sh ip route bgp </summary>
@@ -602,6 +601,13 @@ Codes: C - connected, S - static, K - kernel,
  B E      10.1.0.2/32 [200/0] via 10.2.1.3, Ethernet2
  B E      10.1.0.3/32 [200/0] via 10.2.1.5, Ethernet3
 
+```
+</details>
+
+<details>
+<summary> Spine-1#sh ip route </summary>
+
+```
 Spine-1#sh ip route
 
 VRF: default
@@ -637,7 +643,7 @@ Spine-1#
 ```
 </details>
 
-##### 4.3 Проверка таблицы маршрутизации на примере Leaf-1 коммутатора. 
+##### 4.3 Проверка таблицы маршрутизации на примере Leaf-1: 
 Из таблицы маршрутизации видно, что для подсетей интерфейсов Lo0 и Lo1 коммутаторов Leaf-2 и Leaf-3 присутствуют ECMP маршруты через оба Spine коммутатора.
  
 <details>
@@ -679,7 +685,7 @@ Gateway of last resort is not set
 </details>
 
 <details>
-<summary> Leaf-1# show ip route  </summary>
+<summary> Leaf-1# show ip route bgp </summary>
   
 ```
 
@@ -812,6 +818,7 @@ Spine-1#
 
 ```
 </details>
+
 
 
 
