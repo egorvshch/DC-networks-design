@@ -643,8 +643,49 @@ Spine-1#
 ```
 </details>
 
-##### 4.3 Проверка таблицы маршрутизации на примере Leaf-1: 
+##### 4.3 Проверка BGP и таблицы маршрутизации на примере Leaf-1: 
 Из таблицы маршрутизации видно, что для подсетей интерфейсов Lo0 и Lo1 коммутаторов Leaf-2 и Leaf-3 присутствуют ECMP маршруты через оба Spine коммутатора.
+
+<details>
+<summary> Leaf-1# show ip bgp </summary>
+  
+```
+Leaf-1#sh ip bgp
+BGP routing table information for VRF default
+Router identifier 10.0.0.1, local AS number 65001
+Route status codes: * - valid, > - active, # - not installed, E - ECMP head, e - ECMP
+                    S - Stale, c - Contributing to ECMP, b - backup, L - labeled-unicast
+Origin codes: i - IGP, e - EGP, ? - incomplete
+AS Path Attributes: Or-ID - Originator ID, C-LST - Cluster List, LL Nexthop - Link Local Nexthop
+
+         Network                Next Hop            Metric  LocPref Weight  Path
+ * >     10.0.0.1/32            -                     0       0       -       i
+ * >Ec   10.0.0.2/32            10.2.1.0              0       100     0       65000 65002 i
+ *  ec   10.0.0.2/32            10.2.2.0              0       100     0       65000 65002 i
+ * >Ec   10.0.0.3/32            10.2.2.0              0       100     0       65000 65003 i
+ *  ec   10.0.0.3/32            10.2.1.0              0       100     0       65000 65003 i
+ * >     10.1.0.1/32            -                     0       0       -       i
+ * >Ec   10.1.0.2/32            10.2.1.0              0       100     0       65000 65002 i
+ *  ec   10.1.0.2/32            10.2.2.0              0       100     0       65000 65002 i
+ * >Ec   10.1.0.3/32            10.2.2.0              0       100     0       65000 65003 i
+ *  ec   10.1.0.3/32            10.2.1.0              0       100     0       65000 65003 i
+```
+</details>
+<details>
+<summary> Leaf-1# show ip bgp summary </summary>
+  
+```
+Leaf-1#sh ip bgp summary
+BGP summary information for VRF default
+Router identifier 10.0.0.1, local AS number 65001
+Neighbor Status Codes: m - Under maintenance
+  Neighbor         V  AS           MsgRcvd   MsgSent  InQ OutQ  Up/Down State   PfxRcd PfxAcc
+  10.2.1.0         4  65000             32        32    0    0 00:01:20 Estab   4      4
+  10.2.2.0         4  65000             32        32    0    0 00:01:19 Estab   4      4
+Leaf-1#
+
+```
+</details>
  
 <details>
 <summary> Leaf-1# show ip route  </summary>
@@ -818,6 +859,7 @@ Spine-1#
 
 ```
 </details>
+
 
 
 
