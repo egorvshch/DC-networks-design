@@ -27,7 +27,7 @@ interface Port-Channel20
    !
    evpn ethernet-segment
       identifier 0000:0000:0000:2122:0020
-      designated-forwarder election algorithm preference 100
+      designated-forwarder election algorithm preference 90
       route-target import 00:00:21:22:00:20
    lacp system-id 0000.0021.0022
 !
@@ -124,3 +124,4 @@ router bgp 65022
 !
 end
 Leaf-2-2#
+
