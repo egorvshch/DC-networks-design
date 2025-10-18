@@ -1,0 +1,158 @@
+
+Leaf-1-1#show running-config
+! Command: show running-config
+! device: Leaf-1-1 (vEOS-lab, EOS-4.29.2F)
+!
+! boot system flash:/vEOS-lab.swi
+!
+no aaa root
+!
+transceiver qsfp default-mode 4x10G
+!
+service routing protocols model multi-agent
+!
+hostname Leaf-1-1
+!
+spanning-tree mode mstp
+no spanning-tree vlan-id 4090-4091
+!
+vlan 10
+   name service10
+!
+vlan 4090
+   name mlag-peer
+   trunk group mlag-peer
+!
+vlan 4091
+   name mlag-iBGP
+   trunk group mlag-peer
+!
+vrf instance BLUE
+!
+interface Port-Channel10
+   description to Host-1
+   switchport trunk allowed vlan 10
+   switchport mode trunk
+   mlag 10
+!
+interface Port-Channel999
+   description mlag_peer-link_to_Leaf-1-2
+   switchport mode trunk
+   switchport trunk group mlag-peer
+!
+interface Ethernet1
+   description to Spine-1
+   no switchport
+   ip address 10.2.1.1/31
+!
+interface Ethernet2
+   description to Spine-2
+   no switchport
+   ip address 10.2.2.1/31
+!
+interface Ethernet3
+   description Host-1_eth0/0
+   switchport trunk allowed vlan 10
+   switchport mode trunk
+   channel-group 10 mode active
+!
+interface Ethernet4
+   description mlag_peer-link_to_Leaf-1-2_Eth4
+   channel-group 999 mode active
+!
+interface Ethernet5
+   description mlag_peer-link_to_Leaf-1-2_Eth5
+   channel-group 999 mode active
+!
+interface Ethernet6
+!
+interface Ethernet7
+!
+interface Ethernet8
+!
+interface Loopback0
+   ip address 10.0.0.1/32
+!
+interface Loopback1
+   ip address 10.1.0.1/32
+!
+interface Management1
+!
+interface Vlan10
+   vrf BLUE
+   ip address virtual 10.4.10.1/24
+!
+interface Vlan4090
+   description MLAG Peer-address
+   ip address 10.199.250.1/30
+!
+interface Vlan4091
+   description for_iBGP
+   ip address 10.199.251.1/30
+!
+interface Vxlan1
+   vxlan source-interface Loopback1
+   vxlan udp-port 4789
+   vxlan vlan 10 vni 10010
+   vxlan vrf BLUE vni 10001
+   vxlan learn-restrict any
+!
+ip virtual-router mac-address 00:00:00:00:00:01
+!
+ip routing
+ip routing vrf BLUE
+!
+ip prefix-list DIRECT_CONNECTED
+   seq 10 permit 10.0.0.1/32
+   seq 20 permit 10.1.0.1/32
+!
+mlag configuration
+   domain-id mlag-999
+   local-interface Vlan4090
+   peer-address 10.199.250.2
+   peer-link Port-Channel999
+!
+route-map RM_REDISTRIBUTE_CONNECTED permit 10
+   match ip address prefix-list DIRECT_CONNECTED
+!
+router bgp 65001
+   router-id 10.0.0.1
+   timers bgp 3 9
+   maximum-paths 2 ecmp 2
+   neighbor EVPN peer group
+   neighbor EVPN remote-as 65000
+   neighbor EVPN update-source Loopback0
+   neighbor EVPN ebgp-multihop 3
+   neighbor EVPN send-community extended
+   neighbor SPINE peer group
+   neighbor SPINE remote-as 65000
+   neighbor SPINE bfd
+   neighbor SPINE password 7 sWIT5buW1FYPyTvv4vVCmQ==
+   neighbor SPINE send-community
+   neighbor 10.0.1.0 peer group EVPN
+   neighbor 10.0.2.0 peer group EVPN
+   neighbor 10.2.1.0 peer group SPINE
+   neighbor 10.2.2.0 peer group SPINE
+   neighbor 10.199.251.2 remote-as 65001
+   neighbor 10.199.251.2 next-hop-self
+   redistribute connected route-map RM_REDISTRIBUTE_CONNECTED
+   !
+   vlan 10
+      rd 65001:10010
+      route-target both 10:10010
+      redistribute learned
+   !
+   address-family evpn
+      neighbor EVPN activate
+   !
+   address-family ipv4
+      neighbor 10.199.251.2 activate
+   !
+   vrf BLUE
+      rd 10.1.0.1:1
+      route-target import evpn 1:10001
+      route-target export evpn 1:10001
+      redistribute connected
+!
+end
+Leaf-1-1#
