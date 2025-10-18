@@ -1,4 +1,4 @@
-# ДЗ №5
+# ДЗ №7
 VXLAN. Multihoming
 ***
 ## Цель:
@@ -1310,6 +1310,25 @@ Port Channel Port-Channel20:
  Et3     Bundled | 8000,aa-bb-cc-80-70-00        1   ALGs+CD    0x0014    32768
 
 Leaf-2-1#
+Leaf-2-1#sh bgp evpn instance
+EVPN instance: VLAN 20
+  Route distinguisher: 65002:10020
+  Route target import: Route-Target-AS:20:10020
+  Route target export: Route-Target-AS:20:10020
+  Service interface: VLAN-based
+  Local VXLAN IP address: 10.1.0.2
+  VXLAN: enabled
+  MPLS: disabled
+  Local ethernet segment:
+    ESI: 0000:0000:0000:2122:0020
+      Interface: Port-Channel20
+      Mode: all-active
+      State: up
+      ES-Import RT: 00:00:21:22:00:20
+      DF election algorithm: preference
+      Designated forwarder: 10.1.0.2
+      Non-Designated forwarder: 10.1.0.22
+Leaf-2-1#
 
 ```
 </details>
@@ -1403,7 +1422,7 @@ AS Path Attributes: Or-ID - Originator ID, C-LST - Cluster List, LL Nexthop - Li
  * >Ec    RD: 10.1.0.2:1 auto-discovery 0000:0000:0000:2122:0020
                                  10.1.0.2              -       100     0       65000 65002 i
  *  ec    RD: 10.1.0.2:1 auto-discovery 0000:0000:0000:2122:0020
-                                                                               65000 65002 i
+                                 10.1.0.2              -       100     0       65000 65002 i
  * >      RD: 10.1.0.22:1 auto-discovery 0000:0000:0000:2122:0020
                                  -                     -       -       0       i
  * >Ec    RD: 65001:10010 mac-ip aabb.cc80.6000
@@ -1419,7 +1438,7 @@ AS Path Attributes: Or-ID - Originator ID, C-LST - Cluster List, LL Nexthop - Li
  *  ec    RD: 65002:10020 mac-ip aabb.cc80.7000
                                  10.1.0.2              -       100     0       65000 65002 i
  * >Ec    RD: 65002:10020 mac-ip aabb.cc80.7000 10.4.20.20
-                                                                               65000 65002 i
+                                 10.1.0.2              -       100     0       65000 65002 i
  *  ec    RD: 65002:10020 mac-ip aabb.cc80.7000 10.4.20.20
                                  10.1.0.2              -       100     0       65000 65002 i
  *        RD: 65002:10020 mac-ip aabb.cc80.7000 10.4.20.20
@@ -1435,7 +1454,7 @@ AS Path Attributes: Or-ID - Originator ID, C-LST - Cluster List, LL Nexthop - Li
  * >Ec    RD: 65003:10020 mac-ip aabb.cc80.9000
                                  10.1.0.3              -       100     0       65000 65003 i
  *  ec    RD: 65003:10020 mac-ip aabb.cc80.9000
-                                                                               65000 65003 i
+                                 10.1.0.3              -       100     0       65000 65003 i
  * >Ec    RD: 65003:10020 mac-ip aabb.cc80.9000 10.4.20.40
                                  10.1.0.3              -       100     0       65000 65003 i
  *  ec    RD: 65003:10020 mac-ip aabb.cc80.9000 10.4.20.40
@@ -1563,6 +1582,24 @@ Port Channel Port-Channel20:
  Et3     Bundled | 8000,aa-bb-cc-80-70-00        2   ALGs+CD    0x0014    32768
 
 Leaf-2-2#
+Leaf-2-2#sh bgp evpn instance
+EVPN instance: VLAN 20
+  Route distinguisher: 65002:10020
+  Route target import: Route-Target-AS:20:10020
+  Route target export: Route-Target-AS:20:10020
+  Service interface: VLAN-based
+  Local VXLAN IP address: 10.1.0.22
+  VXLAN: enabled
+  MPLS: disabled
+  Local ethernet segment:
+    ESI: 0000:0000:0000:2122:0020
+      Interface: Port-Channel20
+      Mode: all-active
+      State: up
+      ES-Import RT: 00:00:21:22:00:20
+      DF election algorithm: preference
+      Designated forwarder: 10.1.0.2
+      Non-Designated forwarder: 10.1.0.22
 
 ```
 </details>
@@ -1798,3 +1835,4 @@ Leaf-3#
 
 ```
 </details>
+
