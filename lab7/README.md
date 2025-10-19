@@ -12,7 +12,7 @@ VXLAN. Multihoming
 ***
 ## Результаты выполнения:
 ---
-В качестве исходной схемы использовалась схема выполненная в ДЗ №6 [lab6](https://github.com/egorvshch/DC-networks-design/tree/main/lab6), добавив в нее соответствующие Leaf-1-2 и Leaf-2-2
+В качестве исходной схемы использовалась схема из ДЗ №6 [lab6](https://github.com/egorvshch/DC-networks-design/tree/main/lab6), в которую были добавлены соответствующие Leaf-1-2 и Leaf-2-2
 В рамках работы выполнена настройка multihoming для обоих вариантов: ESI LAG и MC-LAG с поддержкой VXLAN на оборудовании Arista.
 
 
@@ -1835,5 +1835,6 @@ Leaf-3#
 
 ```
 </details>
+
 
 
