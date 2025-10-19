@@ -1,0 +1,75 @@
+
+Border-FW#sh running-config
+! Command: show running-config
+! device: Border-FW (vEOS-lab, EOS-4.29.2F)
+!
+! boot system flash:/vEOS-lab.swi
+!
+no aaa root
+!
+transceiver qsfp default-mode 4x10G
+!
+service routing protocols model multi-agent
+!
+hostname Border-FW
+!
+spanning-tree mode mstp
+!
+interface Ethernet1
+   no switchport
+!
+interface Ethernet1.104
+   encapsulation dot1q vlan 104
+   ip address 10.99.104.2/30
+!
+interface Ethernet1.105
+   encapsulation dot1q vlan 105
+   ip address 10.99.105.2/30
+!
+interface Ethernet2
+!
+interface Ethernet3
+!
+interface Ethernet4
+!
+interface Ethernet5
+!
+interface Ethernet6
+!
+interface Ethernet7
+!
+interface Ethernet8
+!
+interface Loopback0
+   ip address 10.99.0.1/32
+!
+interface Loopback84
+   ip address 8.8.4.4/32
+!
+interface Loopback88
+   ip address 8.8.8.8/32
+!
+interface Management1
+!
+ip routing
+!
+route-map REPLACE_AS_IN_104 permit 10
+   set as-path match all replacement 65003.104
+!
+route-map REPLACE_AS_IN_105 permit 10
+   set as-path match all replacement 65003.105
+!
+router bgp 65199
+   bgp asn notation asdot
+   router-id 10.99.0.1
+   timers bgp 3 9
+   maximum-paths 24
+   neighbor 10.99.104.1 remote-as 65003
+   neighbor 10.99.104.1 route-map REPLACE_AS_IN_104 in
+   neighbor 10.99.104.1 default-originate
+   neighbor 10.99.105.1 remote-as 65003
+   neighbor 10.99.105.1 route-map REPLACE_AS_IN_105 in
+   neighbor 10.99.105.1 default-originate
+!
+end
+Border-FW#

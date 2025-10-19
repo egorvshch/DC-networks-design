@@ -1,0 +1,122 @@
+
+Border-Leaf#sh running-config
+! Command: show running-config
+! device: Border-Leaf (vEOS-lab, EOS-4.29.2F)
+!
+! boot system flash:/vEOS-lab.swi
+!
+no aaa root
+!
+transceiver qsfp default-mode 4x10G
+!
+service routing protocols model multi-agent
+!
+hostname Border-Leaf
+!
+spanning-tree mode mstp
+!
+vrf instance BLUE
+!
+vrf instance RED
+!
+interface Ethernet1
+   description to Spine-1
+   no switchport
+   ip address 10.2.1.5/31
+!
+interface Ethernet2
+   description to Spine-2
+   no switchport
+   ip address 10.2.2.5/31
+!
+interface Ethernet3
+   no switchport
+!
+interface Ethernet3.104
+   encapsulation dot1q vlan 104
+   vrf BLUE
+   ip address 10.99.104.1/30
+!
+interface Ethernet3.105
+   encapsulation dot1q vlan 105
+   vrf RED
+   ip address 10.99.105.1/30
+!
+interface Ethernet4
+!
+interface Ethernet5
+!
+interface Ethernet6
+!
+interface Ethernet7
+!
+interface Ethernet8
+!
+interface Loopback0
+   ip address 10.0.0.3/32
+!
+interface Loopback1
+   ip address 10.1.0.3/32
+!
+interface Management1
+!
+interface Vxlan1
+   vxlan source-interface Loopback1
+   vxlan udp-port 4789
+   vxlan vrf BLUE vni 10001
+   vxlan vrf RED vni 10002
+   vxlan learn-restrict any
+!
+ip virtual-router mac-address 00:00:00:00:00:01
+!
+ip routing
+ip routing vrf BLUE
+ip routing vrf RED
+!
+ip prefix-list DIRECT_CONNECTED
+   seq 10 permit 10.0.0.3/32
+   seq 20 permit 10.1.0.3/32
+!
+route-map RM_REDISTRIBUTE_CONNECTED permit 10
+   match ip address prefix-list DIRECT_CONNECTED
+!
+router bgp 65003
+   bgp asn notation asdot
+   router-id 10.0.0.3
+   timers bgp 3 9
+   maximum-paths 2 ecmp 2
+   neighbor EVPN peer group
+   neighbor EVPN remote-as 65000
+   neighbor EVPN update-source Loopback0
+   neighbor EVPN ebgp-multihop 3
+   neighbor EVPN send-community extended
+   neighbor SPINE peer group
+   neighbor SPINE remote-as 65000
+   neighbor SPINE bfd
+   neighbor SPINE password 7 sWIT5buW1FYPyTvv4vVCmQ==
+   neighbor SPINE send-community
+   neighbor 10.0.1.0 peer group EVPN
+   neighbor 10.0.2.0 peer group EVPN
+   neighbor 10.2.1.4 peer group SPINE
+   neighbor 10.2.2.4 peer group SPINE
+   redistribute connected route-map RM_REDISTRIBUTE_CONNECTED
+   !
+   address-family evpn
+      neighbor EVPN activate
+   !
+   vrf BLUE
+      rd 10.1.0.3:1
+      route-target import evpn 1:10001
+      route-target export evpn 1:10001
+      neighbor 10.99.104.2 remote-as 65199
+      aggregate-address 10.4.0.0/16 summary-only
+   !
+   vrf RED
+      rd 10.1.0.3:2
+      route-target import evpn 2:10002
+      route-target export evpn 2:10002
+      neighbor 10.99.105.2 remote-as 65199
+      aggregate-address 10.5.0.0/16 summary-only
+!
+end
+Border-Leaf#
