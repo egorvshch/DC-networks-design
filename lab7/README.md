@@ -18,7 +18,7 @@ VXLAN. Multihoming
 
 ### 1. Схема сети:
    
-![](https://github.com/egorvshch/DC-networks-design/blob/main/lab6/schema_dc_net.JPG)
+![](https://github.com/egorvshch/DC-networks-design/blob/main/lab7/schema_dc_net.JPG)
 ---
 
 ### 2. IP-адресация оборудования для Underlay сети ЦОД:
@@ -1835,6 +1835,7 @@ Leaf-3#
 
 ```
 </details>
+
 
 
 
