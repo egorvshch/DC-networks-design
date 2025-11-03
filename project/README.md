@@ -288,9 +288,9 @@
 
 ---
 ### 3. Настройка оборудрования DC1:
-
-#### 3.1 Настройка DC1-Spine-1
-
+<details>
+<summary> 3.1 Настройка DC1-Spine-1 </summary>
+*
 <details>
 <summary> Базовые настройки и настройки интерфейсов на DC1-Spine-1 </summary>
 
@@ -339,6 +339,7 @@ interface Loopback1
 !
 ```
 </details>
+
 <details>
 <summary> Настройки маршрутизации BGP, Underlay и Overlay на DC1-Spine-1 </summary>
 
@@ -386,8 +387,11 @@ router bgp 65100
 
 [Полная конфигурация DC1-Spine-1](https://github.com/egorvshch/DC-networks-design/blob/main/project/configs/DC1-Spine-1)
 
-#### 3.2 Настройка DC1-Spine-2
+</details>
 
+<details>
+<summary> 3.2 Настройка DC1-Spine-2 </summary>
+*
 <details>
 <summary> Базовые настройки и настройки интерфейсов на DC1-Spine-2 </summary>
 
@@ -482,8 +486,11 @@ router bgp 65100
 </details>
 
 [Полная конфигурация DC1-Spine-2](https://github.com/egorvshch/DC-networks-design/blob/main/project/configs/DC1-Spine-2)
+</details>
 
-#### 3.3 Настройка DC1-Leaf-1-1
+<details>
+<summary> 3.3 Настройка DC1-Leaf-1-1 </summary>
+-
 
 <details>
 <summary> Базовые настройки и настройки интерфейсов на DC1-Leaf-1-1 </summary>
@@ -679,8 +686,11 @@ end
 </details>
 
 [Полная конфигурация DC1-Leaf-1-1](https://github.com/egorvshch/DC-networks-design/blob/main/project/configs/DC1-Leaf-1-1)
+</details>
 
-#### 3.4 Настройка DC1-Leaf-1-2
+<details>
+<summary> 3.4 Настройка DC1-Leaf-1-2 </summary>
+-
 
 <details>
 <summary> Базовые настройки и настройки интерфейсов на DC1-Leaf-1-2 </summary>
@@ -878,7 +888,11 @@ end
 
 [Полная конфигурация DC1-Leaf-1-2](https://github.com/egorvshch/DC-networks-design/blob/main/project/configs/DC1-Leaf-1-2)
 
-#### 3.5 Настройка DC1-Leaf-2-1
+</details>
+
+<details>
+<summary> 3.5 Настройка DC1-Leaf-2-1 </summary>
+-
 
 <details>
 <summary> Базовые настройки и настройки интерфейсов на DC1-Leaf-2-1 </summary>
@@ -1079,8 +1093,11 @@ end
 </details>
 
 [Полная конфигурация DC1-Leaf-2-1](https://github.com/egorvshch/DC-networks-design/blob/main/project/configs/DC1-Leaf-2-1)
+</details>
 
-#### 3.6 Настройка DC1-Leaf-2-2
+<details>
+<summary> 3.6 Настройка DC1-Leaf-2-2 </summary>
+-
 
 <details>
 <summary> Базовые настройки и настройки интерфейсов на DC1-Leaf-1-2 </summary>
@@ -1272,9 +1289,11 @@ end
 </details>
 
 [Полная конфигурация DC1-Leaf-2-2](https://github.com/egorvshch/DC-networks-design/blob/main/project/configs/DC1-Leaf-2-2)
+</details>
 
-#### 3.7 Настройка DC1-Border-GW1
-
+<details>
+<summary> 3.7 Настройка DC1-Border-GW1 </summary>
+-
 <details>
 <summary> Базовые настройки и настройки интерфейсов на DC1-Border-GW1 </summary>
 
@@ -1477,9 +1496,11 @@ router bgp 65198
 </details>
 
 [Полная конфигурация DC1-Border-GW1](https://github.com/egorvshch/DC-networks-design/blob/main/project/configs/DC1-Border-GW1)
+</details>
 
-#### 3.8 Настройка DC1-Border-GW2
-
+<details>
+<summary> 3.8 Настройка DC1-Border-GW2 </summary>
+-
 <details>
 <summary> Базовые настройки и настройки интерфейсов на DC1-Border-GW2 </summary>
 
@@ -1683,9 +1704,11 @@ router bgp 65199
 </details>
 
 [Полная конфигурация DC1-Border-GW2](https://github.com/egorvshch/DC-networks-design/blob/main/project/configs/DC1-Border-GW2)
+</details>
 
-#### 3.9 Настройка DC1-Border-R1
-
+<details>
+<summary> 3.9 Настройка DC1-Border-R1 </summary>
+-
 <details>
 <summary> Базовые настройки и настройки интерфейсов на DC1-Border-R1 </summary>
 
@@ -1848,8 +1871,11 @@ router bgp 65301
 </details>
 
 [Полная конфигурация DC1-Border-R1](https://github.com/egorvshch/DC-networks-design/blob/main/project/configs/DC1-Border-R1)
+</details>
 
-#### 3.10 Настройка DC1-Host-1, DC1-Host-2, DC1-Host-3 и DC1-Host-4
+<details>
+<summary> 3.10 Настройка DC1-Host-1, DC1-Host-2, DC1-Host-3 и DC1-Host-4 </summary>
+-
 конфигурация хостов указана по сылками ниже:
 
 [Полная конфигурация DC1-Host-1](https://github.com/egorvshch/DC-networks-design/blob/main/project/configs/DC1-Host-1)
@@ -1859,11 +1885,13 @@ router bgp 65301
 [Полная конфигурация DC1-Host-3](https://github.com/egorvshch/DC-networks-design/blob/main/project/configs/DC1-Host-3)
 
 [Полная конфигурация DC1-Host-4](https://github.com/egorvshch/DC-networks-design/blob/main/project/configs/DC1-Host-4)
+</details>
 
 ### 4. Настройка оборудрования DC2:
 
-#### 4.1 Настройка DC2-Spine-1
-
+<details>
+<summary> 4.1 Настройка DC2-Spine-1 </summary>
+-
 <details>
 <summary> Базовые настройки и настройки интерфейсов на DC2-Spine-1 </summary>
 
@@ -1958,8 +1986,11 @@ end
 </details>
 
 [Полная конфигурация DC2-Spine-1](https://github.com/egorvshch/DC-networks-design/blob/main/project/configs/DC2-Spine-1)
+</details>
 
-#### 4.2 Настройка DC2-Spine-2
+<details>
+<summary> 4.2 Настройка DC2-Spine-2 </summary>
+-
 
 <details>
 <summary> Базовые настройки и настройки интерфейсов на DC2-Spine-2 </summary>
@@ -2056,9 +2087,11 @@ end
 </details>
 
 [Полная конфигурация DC2-Spine-2](https://github.com/egorvshch/DC-networks-design/blob/main/project/configs/DC2-Spine-2)
+</details>
 
-#### 4.3 Настройка DC2-Leaf-1-1
-
+<details>
+<summary> 4.3 Настройка DC2-Leaf-1-1 </summary>
+-
 <details>
 <summary> Базовые настройки и настройки интерфейсов на DC2-Leaf-1-1 </summary>
 
@@ -2288,9 +2321,11 @@ end
 </details>
 
 [Полная конфигурация DC2-Leaf-1-1](https://github.com/egorvshch/DC-networks-design/blob/main/project/configs/DC2-Leaf-1-1)
+</details>
 
-#### 4.4 Настройка DC2-Leaf-1-2
-
+<details>
+<summary> 4.4 Настройка DC2-Leaf-1-2 </summary>
+-
 <details>
 <summary> Базовые настройки и настройки интерфейсов на DC2-Leaf-1-2 </summary>
 
@@ -2515,8 +2550,11 @@ end
 </details>
 
 [Полная конфигурация DC2-Leaf-1-2](https://github.com/egorvshch/DC-networks-design/blob/main/project/configs/DC2-Leaf-1-2)
+</details>
 
-#### 4.5 Настройка DC2-Leaf-2-1
+<details>
+<summary> 4.5 Настройка DC2-Leaf-2-1 </summary>
+-
 
 <details>
 <summary> Базовые настройки и настройки интерфейсов на DC2-Leaf-2-1 </summary>
@@ -2740,8 +2778,11 @@ end
 </details>
 
 [Полная конфигурация DC2-Leaf-2-1](https://github.com/egorvshch/DC-networks-design/blob/main/project/configs/DC2-Leaf-2-1)
+</details>
 
-#### 4.6 Настройка DC2-Leaf-2-2
+<details>
+<summary> 4.6 Настройка DC2-Leaf-2-2 </summary>
+-
 
 <details>
 <summary> Базовые настройки и настройки интерфейсов на DC2-Leaf-2-2 </summary>
@@ -2959,8 +3000,11 @@ end
 </details>
 
 [Полная конфигурация DC2-Leaf-2-2](https://github.com/egorvshch/DC-networks-design/blob/main/project/configs/DC2-Leaf-2-2)
+</details>
 
-#### 4.7 Настройка DC2-Border-GW1
+<details>
+<summary> 4.7 Настройка DC2-Border-GW1 </summary>
+-
 
 <details>
 <summary> Базовые настройки и настройки интерфейсов на DC2-Border-GW1 </summary>
@@ -3166,8 +3210,11 @@ end
 </details>
 
 [Полная конфигурация DC2-Border-GW1](https://github.com/egorvshch/DC-networks-design/blob/main/project/configs/DC2-Border-GW1)
+</details>
 
-#### 4.8 Настройка DC2-Border-GW2
+<details>
+<summary> 4.8 Настройка DC2-Border-GW2 </summary>
+-
 
 <details>
 <summary> Базовые настройки и настройки интерфейсов на DC2-Border-GW2 </summary>
@@ -3375,8 +3422,11 @@ end
 </details>
 
 [Полная конфигурация DC2-Border-GW2](https://github.com/egorvshch/DC-networks-design/blob/main/project/configs/DC2-Border-GW2)
+</details>
 
-#### 4.9 Настройка DC2-Border-R1
+<details>
+<summary> 4.9 Настройка DC2-Border-R1 </summary>
+-
 
 <details>
 <summary> Базовые настройки и настройки интерфейсов на DC2-Border-R1 </summary>
@@ -3543,8 +3593,11 @@ end
 </details>
 
 [Полная конфигурация DC2-Border-R1](https://github.com/egorvshch/DC-networks-design/blob/main/project/configs/DC2-Border-R1)
+</details>
 
-#### 4.10 Настройка DC2-Host-1, DC2-Host-2, DC2-Host-3 и DC2-Host-4
+<details>
+<summary> 4.10 Настройка DC2-Host-1, DC2-Host-2, DC2-Host-3 и DC2-Host-4 </summary>
+
 конфигурация хостов указана по сылками ниже:
 
 [Полная конфигурация DC2-Host-1](https://github.com/egorvshch/DC-networks-design/blob/main/project/configs/DC2-Host-1)
@@ -3554,10 +3607,12 @@ end
 [Полная конфигурация DC2-Host-3](https://github.com/egorvshch/DC-networks-design/blob/main/project/configs/DC2-Host-3)
 
 [Полная конфигурация DC2-Host-4](https://github.com/egorvshch/DC-networks-design/blob/main/project/configs/DC2-Host-4)
+</details>
 
 ### 5 Настройка обрудования DCI
-#### 5.1 Настройка DCI-Router-1:
-
+<details>
+<summary> 5.1 Настройка DCI-Router-1 </summary>
+-
 <details>
 <summary> Базовые настройки и настройки интерфейсов на DCI-Router-1 </summary>
 
@@ -3654,8 +3709,11 @@ end
 </details>
 
 [Полная конфигурация DCI-Router-1](https://github.com/egorvshch/DC-networks-design/blob/main/project/configs/DCI-Router-1)
+</details>
 
-#### 5.2 Настройка DCI-Router-2:
+<details>
+<summary> 5.2 Настройка DCI-Router-2 </summary>
+-
 <details>
 <summary> Базовые настройки и настройки интерфейсов на DCI-Router-2 </summary>
 
@@ -3753,8 +3811,9 @@ end
 </details>
 
 [Полная конфигурация DCI-Router-2](https://github.com/egorvshch/DC-networks-design/blob/main/project/configs/DCI-Router-2)
+</details>
 
-#### 4.Проверка настроек
+#### 6.Проверка настроек
 
 <details>
 <summary> 4.1 Проверка связности на Host-1 </summary>
@@ -4538,6 +4597,7 @@ Border-FW#
 - клиенты разных vrf имеют связность между собой;
 - маршрутизация между клиентами осуществляется через внешнее устройсвто Border-FW;
 - обмен маршрутной информации осуществляется с использованием суммарных агрегированных префиксов через EVPN route-type 5.
+
 
 
 
