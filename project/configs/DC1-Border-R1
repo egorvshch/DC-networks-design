@@ -1,0 +1,170 @@
+
+DC1-Border-R1#sh running-config
+! Command: show running-config
+! device: DC1-Border-R1 (vEOS-lab, EOS-4.29.2F)
+!
+! boot system flash:/vEOS-lab.swi
+!
+no aaa root
+!
+transceiver qsfp default-mode 4x10G
+!
+service routing protocols model multi-agent
+!
+hostname DC1-Border-R1
+!
+spanning-tree mode mstp
+!
+interface Ethernet1
+   description to_DC1-Border-GW1
+   no switchport
+!
+interface Ethernet1.104
+   description to_vrf_BLUE_for_DC1-Border-GW1
+   encapsulation dot1q vlan 104
+   ip address 10.198.104.2/30
+!
+interface Ethernet1.105
+   description to_vrf_RED_for_DC1-Border-GW1
+   encapsulation dot1q vlan 105
+   ip address 10.198.105.2/30
+!
+interface Ethernet1.106
+   description to_vrf_GREEN_for_DC1-Border-GW1
+   encapsulation dot1q vlan 106
+   ip address 10.198.106.2/30
+!
+interface Ethernet2
+   description to_DC1-Border-GW2
+   no switchport
+!
+interface Ethernet2.104
+   description to_vrf_BLUE_for_DC1-Border-GW2
+   encapsulation dot1q vlan 104
+   ip address 10.199.104.2/30
+!
+interface Ethernet2.105
+   description to_vrf_RED_for_DC1-Border-GW2
+   encapsulation dot1q vlan 105
+   ip address 10.199.105.2/30
+!
+interface Ethernet2.106
+   description to_vrf_GREEN_for_DC1-Border-GW2
+   encapsulation dot1q vlan 106
+   ip address 10.199.106.2/30
+!
+interface Ethernet3
+   description to_DC2-Border-GW1
+   no switchport
+!
+interface Ethernet3.114
+   description to_vrf_BLUE_for_DC2-Border-GW1
+   encapsulation dot1q vlan 114
+   ip address 10.198.104.14/30
+!
+interface Ethernet3.115
+   description to_vrf_RED_for_DC2-Border-GW1
+   encapsulation dot1q vlan 115
+   ip address 10.198.105.14/30
+!
+interface Ethernet3.116
+   description to_vrf_GREEN_for_DC2-Border-GW1
+   encapsulation dot1q vlan 116
+   ip address 10.198.106.14/30
+!
+interface Ethernet4
+   description to_DC1-Border-GW2
+   no switchport
+!
+interface Ethernet4.114
+   description to_vrf_BLUE_for_DC2-Border-GW2
+   encapsulation dot1q vlan 114
+   ip address 10.199.104.14/30
+!
+interface Ethernet4.115
+   description to_vrf_RED_for_DC2-Border-GW2
+   encapsulation dot1q vlan 115
+   ip address 10.199.105.14/30
+!
+interface Ethernet4.116
+   description to_vrf_GREEN_for_DC2-Border-GW2
+   encapsulation dot1q vlan 116
+   ip address 10.199.106.14/30
+!
+interface Ethernet5
+   description to DC2-Border-R1
+   no switchport
+   ip address 10.195.0.1/30
+!
+interface Ethernet6
+!
+interface Ethernet7
+!
+interface Ethernet8
+!
+interface Loopback0
+   ip address 10.199.0.1/32
+!
+interface Loopback11
+   ip address 1.1.1.1/24
+!
+interface Management1
+!
+ip routing
+!
+ip prefix-list LOOPBACKs
+   seq 10 permit 1.1.1.0/24
+!
+ip prefix-list for_DC1-Border-GW
+   seq 10 permit 0.0.0.0/0
+!
+route-map RM-REDISTRIB-CONNECTED permit 10
+   match ip address prefix-list LOOPBACKs
+!
+route-map for_DC1-Border-GW_out permit 10
+   match ip address prefix-list for_DC1-Border-GW
+!
+router bgp 65301
+   bgp asn notation asdot
+   router-id 10.199.0.1
+   timers bgp 3 9
+   maximum-paths 24
+   neighbor DC1-Border-GW1 peer group
+   neighbor DC1-Border-GW1 remote-as 65198
+   neighbor DC1-Border-GW1 route-map for_DC1-Border-GW_out out
+   neighbor DC1-Border-GW1 password 7 mXpeujoAlay5K6JXiQjWDQ==
+   neighbor DC1-Border-GW1 default-originate
+   neighbor DC1-Border-GW2 peer group
+   neighbor DC1-Border-GW2 remote-as 65199
+   neighbor DC1-Border-GW2 route-map for_DC1-Border-GW_out out
+   neighbor DC1-Border-GW2 password 7 mvBH1FR+M+6kO9JylsFXRg==
+   neighbor DC1-Border-GW2 default-originate
+   neighbor DC2-Border-GW1 peer group
+   neighbor DC2-Border-GW1 remote-as 65298
+   neighbor DC2-Border-GW1 route-map for_DC1-Border-GW_out out
+   neighbor DC2-Border-GW1 password 7 Jd5ObGtFDc7qf/cuFnrqTA==
+   neighbor DC2-Border-GW1 default-originate
+   neighbor DC2-Border-GW2 peer group
+   neighbor DC2-Border-GW2 remote-as 65299
+   neighbor DC2-Border-GW2 route-map for_DC1-Border-GW_out out
+   neighbor DC2-Border-GW2 password 7 b9rsJJT1YnrVQNUUBHZtKw==
+   neighbor DC2-Border-GW2 default-originate
+   neighbor 10.195.0.2 remote-as 65301
+   neighbor 10.195.0.2 next-hop-self
+   neighbor 10.195.0.2 password 7 FQXiOIsZVLw/KGDnZBvVJQ==
+   neighbor 10.198.104.1 peer group DC1-Border-GW1
+   neighbor 10.198.104.13 peer group DC2-Border-GW1
+   neighbor 10.198.105.1 peer group DC1-Border-GW1
+   neighbor 10.198.105.13 peer group DC2-Border-GW1
+   neighbor 10.198.106.1 peer group DC1-Border-GW1
+   neighbor 10.198.106.13 peer group DC2-Border-GW1
+   neighbor 10.199.104.1 peer group DC1-Border-GW2
+   neighbor 10.199.104.13 peer group DC2-Border-GW2
+   neighbor 10.199.105.1 peer group DC1-Border-GW2
+   neighbor 10.199.105.13 peer group DC2-Border-GW2
+   neighbor 10.199.106.1 peer group DC1-Border-GW2
+   neighbor 10.199.106.13 peer group DC2-Border-GW2
+   redistribute connected route-map RM-REDISTRIB-CONNECTED
+!
+end
+DC1-Border-R1#

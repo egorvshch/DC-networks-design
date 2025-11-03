@@ -1,0 +1,109 @@
+
+DC1-Host-3>en
+DC1-Host-3>enable
+DC1-Host-3#sh run
+DC1-Host-3#sh running-config
+Building configuration...
+
+Current configuration : 1373 bytes
+!
+! Last configuration change at 10:29:39 UTC Mon Nov 3 2025
+!
+version 15.2
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+service compress-config
+!
+hostname DC1-Host-3
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+!
+ip cef
+no ipv6 cef
+!
+!
+!
+spanning-tree mode pvst
+spanning-tree extend system-id
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Port-channel10
+ description to_DC1-Leaf-2
+ switchport trunk allowed vlan 10
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface Ethernet0/0
+ description to_DC1-Leaf-2-1_eth5
+ switchport trunk allowed vlan 10
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ channel-group 10 mode active
+!
+interface Ethernet0/1
+ description to_DC1-Leaf-2-2_eth5
+ switchport trunk allowed vlan 10
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ channel-group 10 mode active
+!
+interface Ethernet0/2
+!
+interface Ethernet0/3
+!
+interface Vlan10
+ ip address 10.4.10.13 255.255.255.0
+!
+ip forward-protocol nd
+!
+ip http server
+ip http secure-server
+!
+ip route 0.0.0.0 0.0.0.0 10.4.10.254
+ip ssh server algorithm encryption aes128-ctr aes192-ctr aes256-ctr
+ip ssh client algorithm encryption aes128-ctr aes192-ctr aes256-ctr
+!
+!
+!
+!
+!
+control-plane
+!
+!
+line con 0
+ logging synchronous
+line aux 0
+line vty 0 4
+ login
+!
+!
+!
+end
+
+DC1-Host-3#

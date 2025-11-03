@@ -1,0 +1,99 @@
+
+DC2-Spine-1#sh running-config
+! Command: show running-config
+! device: DC2-Spine-1 (vEOS-lab, EOS-4.29.2F)
+!
+! boot system flash:/vEOS-lab.swi
+!
+no aaa root
+!
+transceiver qsfp default-mode 4x10G
+!
+service routing protocols model multi-agent
+!
+hostname DC2-Spine-1
+!
+spanning-tree mode mstp
+!
+interface Ethernet1
+   description to DC2-Leaf-1-1
+   no switchport
+   ip address 10.10.1.0/31
+!
+interface Ethernet2
+   description to DC2-Leaf-1-2
+   no switchport
+   ip address 10.10.1.2/31
+!
+interface Ethernet3
+   description to DC2-Leaf-2-1
+   no switchport
+   ip address 10.10.1.4/31
+!
+interface Ethernet4
+   description to DC2-Leaf-2-2
+   no switchport
+   ip address 10.10.1.6/31
+!
+interface Ethernet5
+   description to DC2-Border-GW1
+   no switchport
+   ip address 10.10.1.8/31
+!
+interface Ethernet6
+   description to DC2-Border-GW2
+   no switchport
+   ip address 10.10.1.10/31
+!
+interface Ethernet7
+!
+interface Ethernet8
+!
+interface Loopback0
+   ip address 10.8.1.0/32
+!
+interface Loopback1
+   ip address 10.9.1.0/32
+!
+interface Management1
+!
+ip routing
+!
+ip prefix-list DIRECT_CONNECTED
+   seq 10 permit 10.8.1.0/32
+   seq 20 permit 10.9.1.0/32
+!
+route-map RM_REDISTRIBUTE_CONNECTED permit 10
+   match ip address prefix-list DIRECT_CONNECTED
+!
+peer-filter OVERLAY
+   10 match as-range 65201-65299 result accept
+!
+peer-filter UNDERLAY
+   10 match as-range 65201-65299 result accept
+!
+router bgp 65200
+   bgp asn notation asdot
+   router-id 10.8.1.0
+   timers bgp 3 9
+   maximum-paths 4 ecmp 4
+   bgp listen range 10.8.0.0/24 peer-group OVERLAY peer-filter OVERLAY
+   bgp listen range 10.10.1.0/24 peer-group UNDERLAY peer-filter UNDERLAY
+   neighbor OVERLAY peer group
+   neighbor OVERLAY next-hop-unchanged
+   neighbor OVERLAY update-source Loopback0
+   neighbor OVERLAY ebgp-multihop 3
+   neighbor OVERLAY send-community extended
+   neighbor UNDERLAY peer group
+   neighbor UNDERLAY password 7 4vMwMsSftvmv7pRrLIgVxA==
+   neighbor UNDERLAY send-community
+   redistribute connected route-map RM_REDISTRIBUTE_CONNECTED
+   !
+   address-family evpn
+      neighbor OVERLAY activate
+   !
+   address-family ipv4
+      no neighbor OVERLAY activate
+!
+end
+DC2-Spine-1#
