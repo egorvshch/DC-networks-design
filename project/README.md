@@ -33,7 +33,7 @@
 
 ### 1. Схема сети:
    
-![](https://github.com/egorvshch/DC-networks-design/blob/main/project/images/schema_dc_net.jpg)
+![](https://github.com/egorvshch/DC-networks-design/blob/main/project/images/schema_dc_network-.jpg)
 ---
 
 ### 2. IP-адресация оборудования:
@@ -4538,6 +4538,7 @@ Border-FW#
 - клиенты разных vrf имеют связность между собой;
 - маршрутизация между клиентами осуществляется через внешнее устройсвто Border-FW;
 - обмен маршрутной информации осуществляется с использованием суммарных агрегированных префиксов через EVPN route-type 5.
+
 
 
 
