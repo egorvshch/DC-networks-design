@@ -1,0 +1,185 @@
+
+DC1-Border-GW2#sh running-config n
+% Invalid input
+DC1-Border-GW2#sh running-config
+! Command: show running-config
+! device: DC1-Border-GW2 (vEOS-lab, EOS-4.29.2F)
+!
+! boot system flash:/vEOS-lab.swi
+!
+no aaa root
+!
+transceiver qsfp default-mode 4x10G
+!
+service routing protocols model multi-agent
+!
+hostname DC1-Border-GW2
+!
+spanning-tree mode mstp
+!
+vlan 10
+   name service-10
+!
+vrf instance BLUE
+!
+vrf instance GREEN
+!
+vrf instance RED
+!
+interface Ethernet1
+   description to DC1-Spine-1
+   no switchport
+   ip address 10.2.1.11/31
+!
+interface Ethernet2
+   description to DC1-Spine-2
+   no switchport
+   ip address 10.2.2.11/31
+!
+interface Ethernet3
+   description to DC1-Border-FW1
+   no switchport
+!
+interface Ethernet3.104
+   encapsulation dot1q vlan 104
+   vrf BLUE
+   ip address 10.199.104.1/30
+!
+interface Ethernet3.105
+   encapsulation dot1q vlan 105
+   vrf RED
+   ip address 10.199.105.1/30
+!
+interface Ethernet3.106
+   encapsulation dot1q vlan 106
+   vrf GREEN
+   ip address 10.199.106.1/30
+!
+interface Ethernet4
+   description to_DCI-Router-1
+   no switchport
+   ip address 10.2.91.3/31
+!
+interface Ethernet5
+   description to_DCI-Router-2
+   no switchport
+   ip address 10.2.92.3/31
+!
+interface Ethernet6
+!
+interface Ethernet7
+!
+interface Ethernet8
+!
+interface Loopback0
+   ip address 10.0.0.6/32
+!
+interface Loopback1
+   ip address 10.1.0.5/32
+!
+interface Management1
+!
+interface Vxlan1
+   vxlan source-interface Loopback1
+   vxlan virtual-router encapsulation mac-address 00:00:00:10:10:11
+   vxlan udp-port 4789
+   vxlan vlan 10 vni 10010
+   vxlan vrf BLUE vni 11001
+   vxlan vrf RED vni 11002
+   vxlan learn-restrict any
+!
+ip virtual-router mac-address 00:00:00:00:00:01
+!
+ip routing
+ip routing vrf BLUE
+ip routing vrf GREEN
+ip routing vrf RED
+!
+ip prefix-list DIRECT_CONNECTED
+   seq 10 permit 10.0.0.6/32
+   seq 20 permit 10.1.0.6/32
+   seq 30 permit 10.1.0.5/32
+!
+route-map LOCAL_DIRECT_CONNECTED permit 10
+   match ip address prefix-list DIRECT_CONNECTED
+   match source-protocol connected
+!
+route-map RM_REDISTRIBUTE_CONNECTED permit 10
+   match ip address prefix-list DIRECT_CONNECTED
+!
+router bgp 65199
+   router-id 10.0.0.6
+   timers bgp 3 9
+   maximum-paths 4 ecmp 4
+   neighbor DCI-OVERLAY peer group
+   neighbor DCI-OVERLAY remote-as 65999
+   neighbor DCI-OVERLAY update-source Loopback0
+   neighbor DCI-OVERLAY ebgp-multihop 3
+   neighbor DCI-OVERLAY send-community extended
+   neighbor DCI-UNDERLAY peer group
+   neighbor DCI-UNDERLAY remote-as 65999
+   neighbor DCI-UNDERLAY route-map LOCAL_DIRECT_CONNECTED out
+   neighbor DCI-UNDERLAY password 7 gyEXkFgefQGXVmT5Pf3u4Q==
+   neighbor DCI-UNDERLAY send-community
+   neighbor OVERLAY peer group
+   neighbor OVERLAY remote-as 65100
+   neighbor OVERLAY update-source Loopback0
+   neighbor OVERLAY ebgp-multihop 3
+   neighbor OVERLAY send-community extended
+   neighbor UNDERLAY peer group
+   neighbor UNDERLAY remote-as 65100
+   neighbor UNDERLAY route-map LOCAL_DIRECT_CONNECTED out
+   neighbor UNDERLAY password 7 4vMwMsSftvmv7pRrLIgVxA==
+   neighbor UNDERLAY send-community
+   neighbor 10.0.1.0 peer group OVERLAY
+   neighbor 10.0.2.0 peer group OVERLAY
+   neighbor 10.2.1.10 peer group UNDERLAY
+   neighbor 10.2.2.10 peer group UNDERLAY
+   neighbor 10.2.91.2 peer group DCI-UNDERLAY
+   neighbor 10.2.92.2 peer group DCI-UNDERLAY
+   neighbor 10.91.91.1 peer group DCI-OVERLAY
+   neighbor 10.91.91.2 peer group DCI-OVERLAY
+   redistribute connected route-map RM_REDISTRIBUTE_CONNECTED
+   !
+   vlan 10
+      rd evpn domain all 10.0.0.6:20010
+      route-target both 10:10010
+      route-target import export evpn domain all 99999:10
+      redistribute learned
+   !
+   address-family evpn
+      neighbor DCI-OVERLAY activate
+      neighbor DCI-OVERLAY domain remote
+      neighbor OVERLAY activate
+      neighbor default next-hop-self received-evpn-routes route-type ip-prefix inter-domain
+   !
+   address-family ipv4
+      no neighbor DCI-OVERLAY activate
+      no neighbor OVERLAY activate
+   !
+   vrf BLUE
+      rd 10.1.0.6:1
+      route-target import evpn 1:10001
+      route-target export evpn 1:10001
+      neighbor 10.199.104.2 remote-as 65301
+      neighbor 10.199.104.2 password 7 nHDSggPRmZnhQOoJn+6Bog==
+      aggregate-address 10.4.0.0/16 summary-only advertise-only
+   !
+   vrf GREEN
+      rd 10.1.0.6:3
+      route-target import evpn 3:10003
+      route-target export evpn 3:10003
+      neighbor 10.199.106.2 remote-as 65301
+      neighbor 10.199.106.2 password 7 Wb/uzWsd1lVY/22MLmr58A==
+      aggregate-address 10.6.0.0/16 summary-only advertise-only
+   !
+   vrf RED
+      rd 10.1.0.6:2
+      route-target import evpn 2:10002
+      route-target export evpn 2:10002
+      neighbor 10.199.105.2 remote-as 65301
+      neighbor 10.199.105.2 password 7 nHDSggPRmZnhQOoJn+6Bog==
+      aggregate-address 10.5.0.0/16 summary-only advertise-only
+!
+end
+DC1-Border-GW2#
