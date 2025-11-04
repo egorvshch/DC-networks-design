@@ -103,6 +103,7 @@ interface Vxlan1
    vxlan vlan 10 vni 10010
    vxlan vrf BLUE vni 11001
    vxlan vrf RED vni 11002
+   vxlan vrf GREEN vni 11003
    vxlan learn-restrict any
 !
 ip virtual-router mac-address 00:00:00:00:00:01
@@ -209,3 +210,4 @@ router bgp 65199
 !
 end
 DC1-Border-GW2#
+
