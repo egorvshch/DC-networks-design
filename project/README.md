@@ -1421,6 +1421,7 @@ interface Vxlan1
    vxlan vlan 10 vni 10010
    vxlan vrf BLUE vni 11001
    vxlan vrf RED vni 11002
+   vxlan vrf GREEN vni 11003
    vxlan learn-restrict any
 !
 ip virtual-router mac-address 00:00:00:00:00:01
@@ -1628,6 +1629,7 @@ interface Vxlan1
    vxlan vlan 10 vni 10010
    vxlan vrf BLUE vni 11001
    vxlan vrf RED vni 11002
+   vxlan vrf GREEN vni 11003
    vxlan learn-restrict any
 !
 ip virtual-router mac-address 00:00:00:00:00:01
@@ -6728,6 +6730,7 @@ DC2-Leaf-1-1#
 - для остальных vrf обеспечена прямая связность между ЦОДами благодаря маршрутам Type-5 распространяющихся между фабриками через DCI;
 - DCI стык зарезервирован, Border-GW имеют один Anycast IP;
 - Flood домены EVPN VXLAN разделены между собой,  Border-GW подменяют nexthop на себя.
+
 
 
 
